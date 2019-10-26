@@ -1,0 +1,85 @@
+def player_input():# A Function to take player's marker input and decide who will go first
+    marker=''
+    while marker!='X'and marker!='O':
+        marker=input("player 1:do you want to be X or O?")
+        player1=marker
+    if player1=='X':
+        player2='O'
+        print("player 1 will go first")
+    else:
+        player2='X'
+        print("player 2 will go first.")
+    return(player1,player2)
+def display_board(test_board,player_pos,player_1,player_2,j): # A Function to mark player's input on the board turnwise and display the end result
+    while j<=8:
+        i=player_pos
+        if player_1=='X' or j%2!=0:
+            test_board[i]=player_1
+        else:
+            test_board[i]=player_2
+        print(test_board[7]+'|'+test_board[8]+'|'+test_board[9])
+        print(test_board[4]+'|'+test_board[5]+'|'+test_board[6])
+        print(test_board[1]+'|'+test_board[2]+'|'+test_board[3])
+        if j>=4:
+            decision=game_decision(test_board,j,player_1,player_2)
+            if decision=='win' and j%2==0:
+                print("Congratulationns ! player1 won")
+                choice1=input(" do you want to play again? yes or no")
+                if choice1=='yes':
+                    start()
+                else:
+                    exit(0)
+            elif decision=="draw":
+                print("the game is draw")
+                choice1=input(" do you want to play again? yes or no")
+                if choice1=='yes':
+                    start()
+                else:
+                    exit(0)
+                    
+                    
+            else:
+                print("player2 wins")
+                choice1=input(" do you want to play again? yes or no")
+                if choice1=='yes':
+                    start()
+                else:
+                    exit(0)
+                
+            
+        
+        else:
+            j+=1
+            player_pos=int(input("Choose your next position: (1-9)"))
+                
+                
+def game_decision(test_board,j,player_1,player_2): # A Function to take the decision regarding the game's result
+    player_1=player_1
+    player_2=player_2
+    if ((test_board[7]==test_board[8]==test_board[9]=='X') or(test_board[7]==test_board[8]==test_board[9]=='O') )or((test_board[4]==test_board[5]==test_board[6]=='X') or (test_board[4]==test_board[5]==test_board[6]=='O'))or((test_board[1]==test_board[2]==test_board[3]=='X') or (test_board[1]==test_board[2]==test_board[3]=='O')):
+        return 'win'
+    elif ((test_board[7]==test_board[4]==test_board[1]=='X') or (test_board[7]==test_board[4]==test_board[1]=='O'))or((test_board[8]==test_board[5]==test_board[2]=='X') or (test_board[8]==test_board[5]==test_board[2]=='O'))or((test_board[9]==test_board[6]==test_board[3]=='X') or (test_board[9]==test_board[6]==test_board[3]=='O')):
+        return 'win'
+    elif ((test_board[7]==test_board[5]==test_board[3]=='X') or (test_board[7]==test_board[5]==test_board[3]=='O'))or((test_board[1]==test_board[5]==test_board[9]=='X') or (test_board[1]==test_board[5]==test_board[9]=='O')):
+        return 'win'
+    else:
+        if j!=8:
+            j+=1
+            player_pos=int(input("Choose your next position: (1-9)"))
+            display_board(test_board,player_pos,player_1,player_2,j)
+        else:
+            return 'draw'
+        
+        
+def start():
+    
+    print("Welcome to Tic Tac Toe!")
+    player_1,player_2=player_input()
+    choice=input("Enter yes to begin the game")
+    if choice=='yes':
+        player_pos=int(input("Choose your next position: (1-9)"))
+    test_board=['']*10
+    j=0
+    display_board(test_board,player_pos,player_1,player_2,j)
+
+start()# calling the function to begin the game
